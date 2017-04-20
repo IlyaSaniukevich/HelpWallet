@@ -15,5 +15,8 @@
     <orderEntry type="library" name="ru.yandex.qatools.htmlelements:htmlelements-java:1.17" level="project" />
     <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:6.1.6.jre8-preview" level="project" />
     <orderEntry type="library" name="selenium-server-standalone-3.3.1" level="project" />
+    <orderEntry type="library" name="org.seleniumhq.selenium:selenium-support:2.45.0" level="project" />
+    <orderEntry type="library" name="org.seleniumhq.selenium:selenium-java:2.8.0" level="project" />
+    <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:6.1.0.jre8" level="project" />
   </component>
 </module>

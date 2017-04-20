@@ -2,7 +2,13 @@ package main;
 
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.URL;
 
 
 public class Driver {
@@ -18,179 +24,29 @@ public class Driver {
 	 */
 	public static WebDriver create() throws Exception {
 		WebDriver webdriver=null;
-        /*DesiredCapabilities capabilities;
-        String wdUrl = Config.remoteWebDriverURL;
-        String browser = Config.browserType;
-        switch (browser.toLowerCase()) {
-            case "ff":
-         
-            	FirefoxProfile profile;
-            	boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
-                //if (isDebug){
-                	//ProfilesIni iniProfile = new ProfilesIni();
-                	//profile = iniProfile.getProfile("default");}
-                //else    
-                profile = new FirefoxProfile();
-                
-                loadFFExtensions(profile);
-                profile.setEnableNativeEvents(true); 
-                //setPreferences(profile);
-                if (wdUrl == null) {
-//                	String binariesPath = new File(Thread.currentThread().getContextClassLoader().getResource("//").getFile()).getParentFile().getParent() + 
-//                    		File.separator + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-//                	System.setProperty("wdm.targetPath", binariesPath);
-//                	InternetExplorerDriverManager.getInstance().setup(Architecture.x32, DriverVersion.LATEST.name());
-                	webdriver = new FirefoxDriver(profile);
-                } else {
-                    capabilities = DesiredCapabilities.firefox();
-                    capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-                    webdriver = new RemoteWebDriver(new URL(wdUrl), capabilities);
-                }
-                break;
+		DesiredCapabilities capabilities;
 
-            case "ie":
-                if(!System.getProperty("os.name").toLowerCase().contains("win")){
-                    throw new RuntimeException("iexplore is NOT supported by no win os!");
-                }
-                capabilities = DesiredCapabilities.internetExplorer();
-                
-                capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-                capabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-//                capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-//                capabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
-        		logger.debug("IE NATIVE_EVENTS: " + Selenium.nativeEvents);
-            	capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, Selenium.nativeEvents);
-//                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-                if (wdUrl == null) {
-///                    file = new File(Thread.currentThread().getContextClassLoader().getResource("IEDriverServer.exe").getFile());
-///    				System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-                    String binariesPath = new File(Thread.currentThread().getContextClassLoader().getResource("//").getFile()).getParentFile().getParent() + 
+		FirefoxProfile profile;
+		ProfilesIni iniProfile = new ProfilesIni();
+		profile = iniProfile.getProfile("default");
+
+		//else
+		//profile = new FirefoxProfile();
+
+		loadFFExtensions(profile);
+		profile.setEnableNativeEvents(true);
+		//setPreferences(profile);
+      /*          if (wdUrl == null) {
+                	String binariesPath = new File(Thread.currentThread().getContextClassLoader().getResource("//").getFile()).getParentFile().getParent() +
                     		File.separator + File.separator + "src" + File.separator + "main" + File.separator + "resources";
                 	System.setProperty("wdm.targetPath", binariesPath);
                 	InternetExplorerDriverManager.getInstance().setup(Architecture.x32, DriverVersion.LATEST.name());
-//                	System.getProperty("webdriver.ie.driver");
-
-//                    String ieDriverPath = Config.getCommonFolderPath() + File.separator + "resources" + File.separator + "IEDriverServer.exe";
-//                    System.setProperty("webdriver.ie.driver", ieDriverPath);
-
-                    webdriver = new InternetExplorerDriver(capabilities);
-                } else {
-                    webdriver = new RemoteWebDriver(new URL(wdUrl), capabilities);
-                }
-
-                break;
-
-            case "ch":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--start-maximized");
-				if (!isWindows()) chromeOptions.addArguments("--kiosk");
-                chromeOptions.addArguments("--no-sandbox");
-                chromeOptions.addArguments("--disable-extensions");
-                chromeOptions.addArguments("--test-type");
-                chromeOptions.addArguments("chrome.switches","--disable-extensions");
-                
-                capabilities = DesiredCapabilities.chrome();
-                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                //capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
-                //capabilities.setCapability(CapabilityType.SUPPORTS_APPLICATION_CACHE, "true");
-                capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
-
-                if (wdUrl == null) {
-//                	file = new File(Driver.class.getResource(".chromedriver.exe").getFile());
-///                	file = new File(Thread.currentThread().getContextClassLoader().getResource("chromedriver.exe").getFile());
-///                	System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-                    String binariesPath = new File(Thread.currentThread().getContextClassLoader().getResource("//").getFile()).getParentFile().getParent() + 
-                    		File.separator + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-                	System.setProperty("wdm.targetPath", binariesPath);
-                	ChromeDriverManager.getInstance().setup(Architecture.x32, DriverVersion.LATEST.name());
-//                	System.getProperty("webdriver.chrome.driver");
-//                	String chromeDriverPath = Config.getCommonFolderPath() + File.separator + "resources" + File.separator + "chromedriver";
-//                    if(System.getProperty("os.name").toLowerCase().contains("win")){
-//                        chromeDriverPath += ".exe";
-//                    }
-//                    System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-
-                	webdriver = new ChromeDriver(capabilities);
-                } else {
-                    webdriver = new RemoteWebDriver(new URL(wdUrl), capabilities);
-                }
-
-                break;
-
-            case "safari":
-                SafariOptions safariOptions = new SafariOptions();
-                //TODO: make sure that we need it
-                safariOptions.setUseCleanSession(true);
-
-                capabilities = DesiredCapabilities.safari();
-                capabilities.setCapability(SafariOptions.CAPABILITY, safariOptions);
-
-                if (wdUrl == null) {
-                    webdriver = new SafariDriver(capabilities);
-                } else {
-                    webdriver = new RemoteWebDriver(new URL(wdUrl), capabilities);
-                }
-
-                break;
-                
-            case "android":
-            	capabilities = DesiredCapabilities.android();
-            	capabilities.setCapability("deviceName",Config.AndroidDeviceName);
-      		  	capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-      		  	capabilities.setCapability(MobileCapabilityType.VERSION, "5.1.0");
-      		  	capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-      		    capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
-      		    capabilities.setCapability("appPackage", "com.android.chrome");
-      		    capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
-      		    webdriver = new RemoteWebDriver(new URL(appiunUrl), capabilities);
-      			webdriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-                break;
-
-
-			case "iphone":
-				startAppiumServer();
-				capabilities = new DesiredCapabilities();
-				capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.3");
-				capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
-				capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
-				capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone SE");
-				capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
-				capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "500");
-				capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.6.3");
-				webdriver = new RemoteWebDriver(new URL(appiunUrl), capabilities);
-				webdriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-				break;
-
-			case "ipad":
-				startAppiumServer();
-				capabilities = new DesiredCapabilities();
-				capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.3");
-				capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
-				capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
-				capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPad Air 2");
-				capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
-				capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "500");
-				capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.6.3");
-				webdriver = new RemoteWebDriver(new URL(appiunUrl), capabilities);
-				webdriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-				break;
-
-            default:
-                throw new Exception("Unsupported browser: " + browser);
-        }
-
-		// if wdUrl != null, it is a RemoteWebDriver which needs to be augmented
-		if (wdUrl != null) {
-			webdriver = new Augmenter().augment(webdriver);
-		}
-
-		Browser.setMainWindow(webdriver.getWindowHandle());
-
-		webdriver.manage().timeouts().implicitlyWait(Config.implicitlyWaitTimeout, TimeUnit.MILLISECONDS);
-		webdriver.manage().timeouts().setScriptTimeout(Config.pageLoadTimeout, TimeUnit.MILLISECONDS);
-		webdriver.manage().timeouts().pageLoadTimeout(Config.appWakeUpTimeout, TimeUnit.MILLISECONDS);
-*/
+                	webdriver = new FirefoxDriver(profile);
+                } else {*/
+		capabilities = DesiredCapabilities.firefox();
+		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+		webdriver = new RemoteWebDriver(new URL("http://192.168.8.1"), capabilities);
+		//  }
 		return webdriver;
 	}
 

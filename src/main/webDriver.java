@@ -1,16 +1,12 @@
 package main;
 
-import org.openqa.selenium.Proxy;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
 
 public class webDriver {
 
@@ -26,7 +22,8 @@ public class webDriver {
 
 	}
 /*
-	public static WebDriver createDriver(){
+
+	public static WebDriver createDriverCh(){
         DesiredCapabilities capabilities;
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
@@ -41,30 +38,31 @@ public class webDriver {
     }
 */
 
-    public static WebDriver createDriver(){
-        System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
 
-
-
-
-
+    public static WebDriver createDriverFF(){
+        System.setProperty("webdriver.gecko.driver", "src/resources/geckodriver.exe");
         ProfilesIni profile = new ProfilesIni();
-
-        FirefoxProfile firefoxProfile = profile.getProfile("default");
-
-
-
-
+       FirefoxProfile firefoxProfile = profile.getProfile("default");
         firefoxProfile.setPreference("network.proxy.type", 1);
         firefoxProfile.setPreference("network.proxy.http", "192.168.1.13");
         firefoxProfile.setPreference("network.proxy.http_port", 3128);
         firefoxProfile.setPreference("network.proxy.default", true);
 
-       firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.8.4"); // Avoid startup screen
+    //   firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.8.4"); // Avoid startup screen
 
         driver = new FirefoxDriver(firefoxProfile);
 
         return driver;
+    }
+
+    public static WebDriver createDriver(){
+    DesiredCapabilities capability = DesiredCapabilities.firefox();
+    capability.setCapability("platform", Platform.ANY);
+    capability.setCapability("binary", "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+
+
+    driver = new FirefoxDriver(capability);
+    return driver;
     }
 
 

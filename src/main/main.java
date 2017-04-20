@@ -1,14 +1,7 @@
 package main;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import main.MTSPage;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.WebDriver;
 
 
 public class main {
@@ -22,14 +15,15 @@ public class main {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println("Start app");
 
-		BDUtils.connectToBD();
-		DataBase.testDatabase();
+	//	DBUtils.connectToBD();
 
 
-	driver = webDriver.getWebDriver();
+
+	driver =webDriver.createDriverFF();
+			//webDriver.getWebDriver();
 	//	while (true) {
 			//modem.getNewSms(driver);
 		smsPage= new SmsPage(driver);

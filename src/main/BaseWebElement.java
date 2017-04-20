@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Basic class for Web UI elements using WebDriver API
@@ -235,7 +234,7 @@ private int defaultTimeout=5000;
      * @param isThrowException - if true, exception is thrown upon unsuccessful wait
      */
     public void waitForElementPresent(int timeout, boolean isThrowException) {
-        try{
+      /*  try{
             (new WebDriverWait(Selenium.getWebdriver(), timeout/1000))
                     .until(new Function<WebDriver, Boolean>() {
                         @Override
@@ -246,7 +245,7 @@ private int defaultTimeout=5000;
         }
         catch(Exception e){
             if(isThrowException) throw e;
-        }
+        }*/
     }
 
     /**
@@ -269,7 +268,7 @@ private int defaultTimeout=5000;
      * @param isThrowException - if true, exception is thrown upon unsuccessful wait
      */
     public void waitForElementNotPresent(int timeout, boolean isThrowException) {
-        try{
+   /*     try{
             (new WebDriverWait(Selenium.getWebdriver(), timeout/1000))
                     .until(new Function<WebDriver, Boolean>() {
                         @Override
@@ -280,7 +279,7 @@ private int defaultTimeout=5000;
         }
         catch(Exception e){
             if(isThrowException) throw e;
-        }
+        }*/
     }
 
     /**
@@ -358,13 +357,13 @@ private int defaultTimeout=5000;
      * @throws Exception
      */
     public void waitForElementNotVisible(int timeout, boolean isThrowException) {
-        try{
+  /*      try{
             (new WebDriverWait(Selenium.getWebdriver(), timeout/1000))
                     .until(ExpectedConditions.invisibilityOf(this));
         }
         catch(Exception e){
             if(isThrowException) throw e;
-        }
+        }*/
     }
 
     /**
@@ -791,7 +790,7 @@ private int defaultTimeout=5000;
     public void waitUntilJQueryCompleted() throws InterruptedException{
         int timeout = pageLoadTimeout/1000;
         WebDriverWait waiter = new WebDriverWait(Selenium.getWebdriver(), timeout);
-        try {
+ /*       try {
             waiter.until(new Function<WebDriver, Boolean>() {
                 @Override
                 public Boolean apply(WebDriver input) {
@@ -800,7 +799,7 @@ private int defaultTimeout=5000;
             });
         } catch (TimeoutException e) {
 
-        }
+        }*/
     }
 
     /**
