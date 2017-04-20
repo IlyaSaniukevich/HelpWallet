@@ -22,10 +22,11 @@ public class main {
 
 
 
-	driver =webDriver.createDriverFF();
+	driver =webDriver.createDriverFFNewProfile();
 			//webDriver.getWebDriver();
 	//	while (true) {
 			//modem.getNewSms(driver);
+		driver.get("https://mail.ru/");
 		smsPage= new SmsPage(driver);
 		smsPage.readSMS();
 
