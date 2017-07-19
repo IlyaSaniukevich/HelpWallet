@@ -7,16 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="KotlinJavaRuntime (3)" level="project" />
-    <orderEntry type="library" name="org.seleniumhq.webdriver:webdriver-common:0.9.7376" level="project" />
-    <orderEntry type="library" name="org.openqa.selenium.core:selenium-core:1.0-20080914.225453" level="project" />
-    <orderEntry type="library" name="org.openqa.selenium.server:selenium-server:1.0-20081010.060147" level="project" />
-    <orderEntry type="library" name="org.seleniumhq.selenium:selenium-server:3.3.1" level="project" />
-    <orderEntry type="library" name="ru.yandex.qatools.htmlelements:htmlelements-java:1.17" level="project" />
-    <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:6.1.6.jre8-preview" level="project" />
-    <orderEntry type="library" name="selenium-server-standalone-3.3.1" level="project" />
-    <orderEntry type="library" name="org.seleniumhq.selenium:selenium-support:2.45.0" level="project" />
-    <orderEntry type="library" name="org.seleniumhq.selenium:selenium-java:2.8.0" level="project" />
-    <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:6.1.0.jre8" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
