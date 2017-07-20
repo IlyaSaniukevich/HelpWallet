@@ -33,19 +33,16 @@ public class Main {
 try {
 	driver = webDriver.getWebDriver();
 
-	//	while (true) {
-	//modem.getNewSms(driver);
 
+// get new sms and save into database
 	smsPage = new SmsPage(driver);
 	smsPage.readSMS();
 
-	/*		mtsPage= new MTSPage(driver);
-			mtsPage.openHomePage();
-*/
+	DBUtils.processNewSms();
 
-	//	}
+
 }
-catch (Throwable e){}
+catch (Throwable e){System.out.println(e.getStackTrace());}
 finally {
 	driver.quit();
 }

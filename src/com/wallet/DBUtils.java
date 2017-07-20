@@ -22,11 +22,7 @@ public class DBUtils {
     public static void connectToBD ()
     {
        if (connection != null) return ;
-
-
-
-
-        try {
+       try {
             // Establish the connection.
             SQLServerDataSource ds = new SQLServerDataSource();
             ds.setIntegratedSecurity(false);
@@ -69,7 +65,7 @@ public class DBUtils {
 
     public static boolean saveSms(String PhoneNumber, String TextMessage, String ReceiveTime) throws SQLException, ParseException {
         CallableStatement cstmt = null;
-        ResultSet rs = null;
+      //  ResultSet rs = null;
 
 //2017-04-27 15:44:04
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -86,27 +82,46 @@ public class DBUtils {
         // Execute a stored procedure that returns some data.
             cstmt = connection.prepareCall("{call [dbo].[SaveSMS](?,?,?)}");
 
-      /*   System.out.print("INSERT INTO [dbo].[SmsInbox]\n" +
-                 "           ([PhoneNumber]\n" +
-                 "           ,[TextMessage]\n" +
-                 "           ,[ReceiveTime]\n" +
-                 "     VALUES\n" +
-                 "           (<"+PhoneNumber+", nchar(15),>\n" +
-                 "           ,<"+TextMessage+", nchar(500),>\n" +
-                 "           ,<"+date+", datetime,>)");*/
-
-         /*   cstmt = connection.prepareCall("INSERT INTO [dbo].[SmsInbox]" +
-                    "           ([PhoneNumber]\n" +
-                    "           ,[TextMessage]\n" +
-                    "           ,[ReceiveTime]\n" +
-                    "    ) VALUES(?,?,?)");*/
         cstmt.setString(1, PhoneNumber);
         cstmt.setString(2, TextMessage);
         cstmt.setTimestamp(3, timestamp);
-
-
       cstmt.execute();
     return true;
     }
+
+    public static void processNewSms() throws SQLException {
+      //  String NN;
+       // String PhoneNumber;
+       // String Sms;
+        System.out.println("Process new SMS");
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        cstmt = connection.prepareCall("{call [dbo].[SelectNewSms]}");
+        rs= cstmt.executeQuery();
+        while (rs.next())
+        {
+            String NN = rs.getString("NN");
+            System.out.println("Processing SMS: "+NN);
+            String IssaPhoneNumber = rs.getString("PhoneNumber").trim();
+            String Sms = rs.getString("TextMessage").trim();
+            if ((SmsBlock.isSmsCorrect(Sms)&&(SmsBlock.IssaPhoneNumber.equals(IssaPhoneNumber)))) {
+
+                //add record to deposit table
+                for (int i = 0; i<SmsBlock.getSummaFromSMS(Sms); i++){
+                    cstmt = connection.prepareCall("{call [dbo].[AddDeposit](?,?)}");
+                    cstmt.setString(1, NN);
+                    cstmt.setString(2, SmsBlock.getNumberFromSMS(Sms));
+                    cstmt.execute();
+                }
+
+            }else{
+                cstmt = connection.prepareCall("{call [dbo].[FailSms](?)}");
+                cstmt.setString(1, NN);
+                cstmt.execute();
+
+            }
+        }
+    }
+
 }
 

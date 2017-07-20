@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Created by user on 03.04.2017.
@@ -14,7 +17,7 @@ import ru.yandex.qatools.htmlelements.element.HtmlElement;
 @FindBy (css=".sms_list_tr")
 public class SmsBlock extends HtmlElement {
   //  private WebDriver driver;
-
+    public static String IssaPhoneNumber="0870";
 
     @FindBy (css=".sms_td")
     WebElement checkBox;
@@ -43,4 +46,28 @@ public class SmsBlock extends HtmlElement {
         checkBox.click();
     }
 
+    public static String getNumberFromSMS(String sms){
+        Pattern pattern = Pattern.compile("\\d{12}");
+        Matcher matcher = pattern.matcher(sms);
+        if (matcher.find()){return matcher.group();}
+        return null;
+    }
+
+    public static int getSummaFromSMS(String sms){
+        Pattern pattern = Pattern.compile("\\d(?=rub)");
+        Matcher matcher = pattern.matcher(sms);
+        if (matcher.find()){return  Integer.parseInt(matcher.group());}
+        return 0;
+    }
+
+    public static Boolean isIssaNumber(String PhoneNumber){
+     if (PhoneNumber.equals(IssaPhoneNumber)) return true;
+     return false;
+    }
+
+    public static Boolean isSmsCorrect(String sms){
+        if ((getSummaFromSMS(sms)!=0)&&(getNumberFromSMS(sms)!=null))
+            return true;
+        return false;
+    }
 }
