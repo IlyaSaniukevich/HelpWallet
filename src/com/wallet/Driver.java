@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
 public class Driver {
@@ -46,6 +47,7 @@ public class Driver {
 		capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		webdriver = new RemoteWebDriver(new URL("http://192.168.8.1"), capabilities);
+	//	webdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		//  }
 		return webdriver;
 	}

@@ -60,11 +60,6 @@ public class SmsBlock extends HtmlElement {
         return 0;
     }
 
-    public static Boolean isIssaNumber(String PhoneNumber){
-     if (PhoneNumber.equals(IssaPhoneNumber)) return true;
-     return false;
-    }
-
     public static Boolean isSmsCorrect(String sms){
         if ((getSummaFromSMS(sms)!=0)&&(getNumberFromSMS(sms)!=null))
             return true;

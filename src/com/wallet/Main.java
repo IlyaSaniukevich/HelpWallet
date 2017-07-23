@@ -9,6 +9,7 @@ public class Main {
 	private String modemWinHandle = null;
 	private static MTSPage mtsPage;
 	private static ModemPage modemPage;
+	private static BalansPage balansPage;
 
 	private static SmsPage smsPage;
 
@@ -16,13 +17,12 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
+
+
 	//	DBUtils.connectToBD();
 //		DBUtils.saveSms("1","2","2017-04-27 15:44:04");
 
-	/*	System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
-		WebDriver driver = new FirefoxDriver();
-		driver.get("https://mail.ru/");
-*/
+
 		System.out.println("Start app");
 
 		DBUtils.connectToBD();
@@ -33,6 +33,8 @@ public class Main {
 try {
 	driver = webDriver.getWebDriver();
 
+	balansPage = new BalansPage(driver);
+	balansPage.getBalans();
 
 // get new sms and save into database
 	smsPage = new SmsPage(driver);

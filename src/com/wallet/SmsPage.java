@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by user on 03.04.2017.
@@ -34,8 +36,6 @@ public class SmsPage {
     public List<WebElement> smsList;
 
     public SmsPage(WebDriver driver) {
-
-
         PageFactory.initElements(driver, this);
         this.driver = driver;
         driver.get(smsUrl);
