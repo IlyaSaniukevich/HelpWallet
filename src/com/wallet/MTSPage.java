@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class MTSPage {
     private static WebDriver driver;
     private static String homeUrl="https://dengi.mts.by/";
+    private static String payUrl="https://dengi.mts.by/payments/pay?id=10000393931";
     private static String loginPhone="298016016";
     private static String loginPassword="6122";
     @FindBy(css = ".popup-small")
@@ -29,6 +30,12 @@ public class MTSPage {
 
     @FindBy(css = ".-max-width.mts-button")
     private WebElement loginButton;
+
+    @FindBy(css = ".form-mask_item.form-group_control.--mask-field")
+    private WebElement phoneNumberInput;
+
+    @FindBy(css = ".mts-button.-payments-mts-button")
+    private WebElement nextAfterPhoneNumber;
 
     String cssLoginButton=".-max-width.mts-button";
 
@@ -47,9 +54,9 @@ public class MTSPage {
     }
 
     private void closePopUpRegion(){
-       // if (popUpRegion.isDisplayed()){
-        //    popUpRegionAgree.click();
-       // }
+        if (popUpRegion.isDisplayed()){
+            popUpRegionAgree.click();
+        }
     }
 
     public void login(){
@@ -57,9 +64,14 @@ public class MTSPage {
         inputPassword.sendKeys(loginPassword);
         loginButton.click();
      //   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
      //   WebElement element = wait.until(ExpectedConditions.invisibilityOf(loginButton));
+        driver.get(payUrl);
+
     }
 
-
+public boolean payToNumber(String phoneNumber, int summa){
+    phoneNumberInput.sendKeys(phoneNumber);
+    nextAfterPhoneNumber.click();
+}
 }

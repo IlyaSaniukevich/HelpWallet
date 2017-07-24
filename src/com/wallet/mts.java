@@ -32,10 +32,10 @@ public class mts {
     }
 
     public void paiPrize(){
-        MTSPage mtsPage = new MTSPage;
-        mtsPage.login(driver.);
+//        MTSPage mtsPage = new MTSPage;
+  //      mtsPage.login(driver.);
 
-        webDriver
+    //    webDriver
     }
 
 }

@@ -24,7 +24,9 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 ////////// test
-
+		driver = webDriver.getWebDriver();
+		MTSPage mtsPage = new MTSPage(driver);
+		mtsPage.login();
 
 		//////////
 
@@ -55,8 +57,8 @@ try {
 	DBUtils.processNewSms();
 	String winnersNumber = DBUtils.getWinner();
 
-	MTSPage
-
+	//MTSPage mtsPage = new MTSPage(driver);
+	mtsPage.login();
 }
 catch (Throwable e){System.out.println(e.getStackTrace());}
 finally {
