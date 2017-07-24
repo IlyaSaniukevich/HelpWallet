@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class DBUtils {
@@ -123,7 +124,21 @@ public class DBUtils {
         }
     }
 
+public static String getWinner() throws SQLException {
 
+    CallableStatement cstmt = null;
+    ResultSet rs = null;
+    cstmt = connection.prepareCall("SELECT phone FROM [HelpWallet].[dbo].[Deposit] where winners_nn is null;");
+    rs= cstmt.executeQuery();
+
+    int randomNum = ThreadLocalRandom.current().nextInt(0, rs.getFetchSize());
+
+    for (int i=1;i<randomNum;i++){rs.next();}
+
+    String winnersNumber = rs.getString(1);
+       System.out.println("Random Winner's number " + winnersNumber +". "+randomNum+" from "+ rs.getFetchSize());
+    return winnersNumber;
+    }
 
 
 }

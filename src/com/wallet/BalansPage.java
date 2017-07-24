@@ -47,23 +47,24 @@ public class BalansPage {
     }
 
 
-    public int getBalans(){
+    public Double getBalans(){
 
         checkBalans.click();
 
         waitUntilElementDisplayed(waitTable,driver);
         waitUntilElementNotDisplayed(waitTable,driver);
         //  getBalans(result.getText());
-        System.out.println( getBalans(result.getText()));
+        Double balans= getBalans(result.getText());
+        System.out.println("Balans equals "+ balans);
         // WebDriverWait wait = new WebDriverWait(webDriver, timeoutInSeconds);
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.id<locator>));
 
-        return 0;
+        return balans*100;
     }
 
 
     public void waitUntilElementDisplayed(final WebElement webElement, WebDriver driver) {
-
+System.out.println();
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         ExpectedCondition elementIsDisplayed = new ExpectedCondition<Boolean>() {

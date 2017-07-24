@@ -36,12 +36,10 @@ public class MTSPage {
     public MTSPage(WebDriver driver){
         PageFactory.initElements(driver,this);
         this.driver=driver;
-    }
-
-    public void openHomePage(){
         driver.get(homeUrl);
         closePopUpRegion();
     }
+
 
     public void sendMoneyToNumber(String number){
 
@@ -56,7 +54,7 @@ public class MTSPage {
 
     public void login(){
         inputLogin.sendKeys(loginPhone);
-        inputPassword.sendKeys(loginPhone);
+        inputPassword.sendKeys(loginPassword);
         loginButton.click();
      //   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver, 10);
