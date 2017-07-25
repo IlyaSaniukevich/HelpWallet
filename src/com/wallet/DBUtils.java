@@ -105,13 +105,15 @@ public class DBUtils {
             System.out.println("Processing SMS: "+NN);
             String IssaPhoneNumber = rs.getString("PhoneNumber").trim();
             String Sms = rs.getString("TextMessage").trim();
+            String summaFromSms=SmsBlock.getNumberFromSMS(Sms);
             if ((SmsBlock.isSmsCorrect(Sms)&&(SmsBlock.IssaPhoneNumber.equals(IssaPhoneNumber)))) {
 
                 //add record to deposit table
                 for (int i = 0; i<SmsBlock.getSummaFromSMS(Sms); i++){
                     cstmt = connection.prepareCall("{call [dbo].[AddDeposit](?,?)}");
                     cstmt.setString(1, NN);
-                    cstmt.setString(2, SmsBlock.getNumberFromSMS(Sms));
+                    cstmt.setString(2, summaFromSms));
+
                     cstmt.execute();
                 }
 
@@ -139,7 +141,11 @@ public static String getWinner() throws SQLException {
        System.out.println("Random Winner's number " + winnersNumber +". "+randomNum+" from "+ rs.getFetchSize());
     return winnersNumber;
     }
-
+private static void addSummToJackPot(String summ){
+    cstmt = connection.prepareCall("{call [dbo].[FailSms](?)}");
+    cstmt.setString(1, NN);
+    cstmt.execute();
+}
 
 }
 
