@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,6 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DBUtils {
 
     private static Connection connection= null;
+    private static double sizeOfJackPot = 0.5;
+    private static double oneLot = 0.95;
 
     public static void connectToBD ()
     {
@@ -102,7 +105,7 @@ public class DBUtils {
         while (rs.next())
         {
             String NN = rs.getString("NN");
-            System.out.println("Processing SMS: "+NN);
+          //  System.out.println("Processing SMS: "+NN);
             String IssaPhoneNumber = rs.getString("PhoneNumber").trim();
             String Sms = rs.getString("TextMessage").trim();
             String summaFromSms=SmsBlock.getNumberFromSMS(Sms);
@@ -112,11 +115,11 @@ public class DBUtils {
                 for (int i = 0; i<SmsBlock.getSummaFromSMS(Sms); i++){
                     cstmt = connection.prepareCall("{call [dbo].[AddDeposit](?,?)}");
                     cstmt.setString(1, NN);
-                    cstmt.setString(2, summaFromSms));
+                    cstmt.setString(2, summaFromSms);
 
                     cstmt.execute();
                 }
-
+                addSummToJackPot((int) (SmsBlock.getSummaFromSMS(Sms)*oneLot));
             }else{
                 cstmt = connection.prepareCall("{call [dbo].[FailSms](?)}");
                 cstmt.setString(1, NN);
@@ -141,11 +144,76 @@ public static String getWinner() throws SQLException {
        System.out.println("Random Winner's number " + winnersNumber +". "+randomNum+" from "+ rs.getFetchSize());
     return winnersNumber;
     }
-private static void addSummToJackPot(String summ){
-    cstmt = connection.prepareCall("{call [dbo].[FailSms](?)}");
-    cstmt.setString(1, NN);
+private static void addSummToJackPot(int summ) throws SQLException {
+
+    CallableStatement cstmt = null;
+
+    cstmt = connection.prepareCall("{call [dbo].[AddToPot](?)}");
+    cstmt.setInt(1, summ);
     cstmt.execute();
 }
+
+    public static void reduceFromJackPot(int summ) throws SQLException {
+
+        CallableStatement cstmt = null;
+        cstmt = connection.prepareCall("{call [dbo].[ReduceFromPot](?)}");
+        cstmt.setInt(1, summ);
+        cstmt.execute();
+    }
+
+    public static int getJackPot() throws SQLException {
+        CallableStatement cstmt = null;
+        cstmt = connection.prepareCall("Select * from [HelpWallet].[dbo].[settings]");
+        ResultSet rs = null;
+        rs= cstmt.executeQuery();
+        int result=0;
+        if (rs.next()) {
+        result = (rs.getInt(2));
+        }
+       System.out.println("All JackPot "+result);
+        result = (int)(rs.getInt(2)*sizeOfJackPot);
+        System.out.println("Reduce JackPot to "+result);
+        result = ThreadLocalRandom.current().nextInt(0, result);
+
+        System.out.println("size of jackPoot after random " + result);
+        return result;
+    }
+
+    public static int saveWinner(String phoneNumber, double summ) throws SQLException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+        System.out.println("Save winner in current date "+date.getTime());
+        CallableStatement cstmt = null;
+        cstmt = connection.prepareCall("{call [dbo].[SaveWinner](?,?,?)}");
+
+        cstmt.setTimestamp(1, timestamp);
+        cstmt.setString(2,phoneNumber);
+        cstmt.setDouble(3,summ);
+        cstmt.execute();
+
+        ResultSet rs = null;
+        cstmt = connection.prepareCall("select max(Winner.nn)max_nn from Winner");
+
+        rs=cstmt.executeQuery();
+        int winnerNN=0;
+        if (rs.next()){
+        winnerNN = rs.getInt("max_nn");}
+        return winnerNN;
+    }
+
+    public static  void deleteFromDeposit(String phoneNumber, int summ, int winnerNN) throws SQLException {
+        CallableStatement cstmt = null;
+        cstmt = connection.prepareCall("{call [dbo].[DeleteDeposit](?,?,?)}");
+
+
+        cstmt.setString(1,phoneNumber);
+        int count = (int)(summ/oneLot);
+        cstmt.setInt(2,summ);
+        cstmt.setInt(3,winnerNN);
+        cstmt.execute();
+
+    }
 
 }
 

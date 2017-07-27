@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Thread.sleep;
+
 public class Main {
 
 	private static WebDriver driver;
@@ -24,9 +26,6 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 ////////// test
-		driver = webDriver.getWebDriver();
-		MTSPage mtsPage = new MTSPage(driver);
-		mtsPage.login();
 
 		//////////
 
@@ -41,27 +40,37 @@ public class Main {
 		
 		
 
-try {
+//try {
 	driver = webDriver.getWebDriver();
 
-	balansPage = new BalansPage(driver);
+	/*balansPage = new BalansPage(driver);
 	int balans = (int) Math.floor(balansPage.getBalans()*WinnersFond);
 	int prizFond =  (int) Math.floor(ThreadLocalRandom.current().nextInt(0, (int) balans )/WinnersRate*WinnersRate);
 	System.out.println("Priz fund "+prizFond+ " cents");
+	*/
 
+	//while (true) {
 
 // get new sms and save into database
-	smsPage = new SmsPage(driver);
-	smsPage.readSMS();
 
-	DBUtils.processNewSms();
-	String winnersNumber = DBUtils.getWinner();
+		smsPage = new SmsPage(driver);
+		smsPage.readSMS();
 
-	//MTSPage mtsPage = new MTSPage(driver);
-	mtsPage.login();
-}
-catch (Throwable e){System.out.println(e.getStackTrace());}
-finally {
+		DBUtils.processNewSms();
+		String winnersNumber = DBUtils.getWinner();
+
+
+		MTSPage mtsPage = new MTSPage(driver);
+
+		mtsPage.login();
+		sleep(1000);
+		mtsPage.payToNumber(winnersNumber, DBUtils.getJackPot());
+
+
+	//}
+//}
+//catch (Throwable e){System.out.println(e.getStackTrace());}
+//finally {
 	driver.quit();
 }
 
@@ -69,4 +78,4 @@ finally {
 	}
 
 
-}
+//}

@@ -56,7 +56,7 @@ public class SmsBlock extends HtmlElement {
     public static int getSummaFromSMS(String sms){
         Pattern pattern = Pattern.compile("\\d(?=rub)");
         Matcher matcher = pattern.matcher(sms);
-        if (matcher.find()){return  Integer.parseInt(matcher.group());}
+        if (matcher.find()){return  Integer.parseInt(matcher.group())*100;}
         return 0;
     }
 

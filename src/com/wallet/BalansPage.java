@@ -64,7 +64,7 @@ public class BalansPage {
 
 
     public void waitUntilElementDisplayed(final WebElement webElement, WebDriver driver) {
-System.out.println();
+//System.out.println();
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         ExpectedCondition elementIsDisplayed = new ExpectedCondition<Boolean>() {
