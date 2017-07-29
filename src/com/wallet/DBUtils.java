@@ -21,7 +21,7 @@ public class DBUtils {
 
     private static Connection connection= null;
     private static double sizeOfJackPot = 0.5;
-    private static double oneLot = 0.95;
+    private static double oneLot = 1;
 
     public static void connectToBD ()
     {
@@ -116,10 +116,9 @@ public class DBUtils {
                     cstmt = connection.prepareCall("{call [dbo].[AddDeposit](?,?)}");
                     cstmt.setString(1, NN);
                     cstmt.setString(2, summaFromSms);
-
                     cstmt.execute();
                 }
-                addSummToJackPot((int) (SmsBlock.getSummaFromSMS(Sms)*oneLot));
+                addSummToJackPot((int) (SmsBlock.getSummaFromSMS(Sms)));
             }else{
                 cstmt = connection.prepareCall("{call [dbo].[FailSms](?)}");
                 cstmt.setString(1, NN);
@@ -137,12 +136,12 @@ public static String getWinner() throws SQLException {
     rs= cstmt.executeQuery();
 
     int randomNum = ThreadLocalRandom.current().nextInt(0, rs.getFetchSize());
-
+System.out.println("get "+randomNum+" from "+rs.getFetchSize());
     for (int i=1;i<randomNum;i++){rs.next();}
 
-    String winnersNumber = rs.getString(1);
-       System.out.println("Random Winner's number " + winnersNumber +". "+randomNum+" from "+ rs.getFetchSize());
-    return winnersNumber;
+    String winnersNumber = rs.getString("phone").trim();
+       System.out.println("Random Winner's number " + winnersNumber +". Select random "+randomNum+" from "+ rs.getFetchSize());
+    return winnersNumber.trim();
     }
 private static void addSummToJackPot(int summ) throws SQLException {
 

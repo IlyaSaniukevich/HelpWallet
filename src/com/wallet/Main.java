@@ -18,6 +18,8 @@ public class Main {
 	private static BalansPage balansPage;
 
 	private static SmsPage smsPage;
+	private static VKPage vkPage;
+
 	private static double WinnersFond=0.8;
 	private static double WinnersRate=0.9;
 
@@ -26,6 +28,15 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 ////////// test
+/*
+		driver = webDriver.getWebDriver();
+		vkPage = new VKPage(driver);
+		vkPage.login();
+		String winnersNumber1="375297808382";
+		String postText="Помощь оказана номеру "+winnersNumber1.substring(1,8)+"**"+winnersNumber1.substring(11,12)+" в размере 5";
+
+		vkPage.postInGroup(postText);
+*/
 
 		//////////
 
@@ -64,9 +75,12 @@ public class Main {
 
 		mtsPage.login();
 		sleep(1000);
-		mtsPage.payToNumber(winnersNumber, DBUtils.getJackPot());
+		int jackPot=DBUtils.getJackPot();
+		mtsPage.payToNumber(winnersNumber,jackPot);
 
-
+		vkPage = new VKPage(driver);
+		vkPage.login();
+		vkPage.postInGroup("Помощь оказана номеру "+winnersNumber.substring(1,8)+"**"+winnersNumber.substring(11,12)+" в размере "+jackPot+" руб");
 	//}
 //}
 //catch (Throwable e){System.out.println(e.getStackTrace());}

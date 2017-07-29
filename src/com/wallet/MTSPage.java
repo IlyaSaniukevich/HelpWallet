@@ -70,7 +70,7 @@ public class MTSPage {
 
     private void closePopUpRegion() throws InterruptedException {
 
-        sleep(1000);
+        waitUntilElementDisplayed(popUpRegion,driver);
         if (popUpRegion.isDisplayed()){
         try{
             popUpRegionAgree.click();}
@@ -99,7 +99,7 @@ public boolean payToNumber(String phoneNumber, int summa) throws SQLException, I
     phoneNumberInput.sendKeys(phoneNumber.substring(3));
     sleep(1000);
     nextAfterPhoneNumber.click();
-    double sumInRub= summa/100.00;
+    double sumInRub= summa;
     inputSumma.sendKeys(String.valueOf(sumInRub));
     //confirmPayment.click();
 
@@ -113,7 +113,7 @@ public boolean payToNumber(String phoneNumber, int summa) throws SQLException, I
     return true;
 }
 
-    public void waitUntilElementNotDisplayed(final WebElement webElement, WebDriver driver) {
+    public static void waitUntilElementNotDisplayed(final WebElement webElement, WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         ExpectedCondition elementIsDisplayed = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver arg0) {
