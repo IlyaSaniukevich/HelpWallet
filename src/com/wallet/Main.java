@@ -80,9 +80,13 @@ public class Main {
 
 		vkPage = new VKPage(driver);
 		vkPage.login();
-		vkPage.postInGroup("Помощь оказана номеру "+winnersNumber.substring(1,8)+"**"+winnersNumber.substring(11,12)+" в размере "+jackPot+" руб");
+		if (MTSPage.successPaid) {
+			vkPage.postInGroup("Тест: Помощь оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
+		} else{
+			vkPage.postInGroup("Тест: Помощь будет оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
+		}
 	//}
-//}
+//}Помощь оказана номеру 7529788**1 в размере 13 руб
 //catch (Throwable e){System.out.println(e.getStackTrace());}
 //finally {
 	driver.quit();

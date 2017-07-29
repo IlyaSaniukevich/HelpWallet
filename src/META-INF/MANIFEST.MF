@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Class-Path: neko-htmlunit-2.25.jar websocket-common-9.4.3.v20170317.ja
+ r websocket-client-9.4.3.v20170317.jar mail-1.4.5.jar jna-4.1.0.jar j
+ etty-http-9.4.3.v20170317.jar bcprov-jdk15on-1.51.jar commons-exec-1.
+ 3.jar azure-keyvault-0.9.3.jar gson-2.8.0.jar jaxb-impl-2.2.3-1.jar h
+ ttpcore-4.4.6.jar javax.inject-1.jar cglib-nodep-3.2.4.jar selenium-c
+ hrome-driver-3.4.0.jar jetty-io-9.4.1.v20170120.jar guava-21.0.jar se
+ lenium-leg-rc-2.53.0.jar mssql-jdbc-6.1.0.jre8.jar selenium-firefox-d
+ river-3.4.0.jar json-smart-1.1.1.jar selenium-ie-driver-3.4.0.jar htt
+ pclient-4.5.3.jar activation-1.1.jar jackson-core-asl-1.9.2.jar htmle
+ lements-java-1.17.jar serializer-2.7.2.jar snakeyaml-1.15.jar websock
+ et-api-9.4.3.v20170317.jar htmlunit-2.26.jar jcip-annotations-1.0.jar
+  jetty-util-9.4.1.v20170120.jar adal4j-1.0.0.jar azure-core-0.9.3.jar
+  jackson-xc-1.9.2.jar selenium-api-3.4.0.jar jackson-mapper-asl-1.9.2
+ .jar commons-logging-1.2.jar xercesImpl-2.11.0.jar jetty-repacked-9.4
+ .1.v20170120.jar selenium-edge-driver-3.4.0.jar htmlunit-driver-2.26.
+ jar httpmime-4.5.3.jar nimbus-jose-jwt-3.1.2.jar jetty-client-9.4.3.v
+ 20170317.jar selenium-remote-driver-3.4.0.jar cssparser-0.9.22.jar je
+ rsey-core-1.13.jar jersey-json-1.13.jar selenium-java-3.4.0.jar netty
+ -3.5.7.Final.jar javax.servlet-api-3.1.0.jar oauth2-oidc-sdk-4.5.jar 
+ selenium-support-3.4.0.jar jna-platform-4.1.0.jar hamcrest-core-1.3.j
+ ar commons-io-2.5.jar jaxb-api-2.2.2.jar slf4j-api-1.7.5.jar stax-api
+ -1.0-2.jar jackson-jaxrs-1.9.2.jar phantomjsdriver-1.4.0.jar commons-
+ codec-1.10.jar xml-apis-1.4.01.jar selenium-safari-driver-3.4.0.jar j
+ commander-1.48.jar sac-1.3.jar selenium-server-3.4.0.jar xalan-2.7.2.
+ jar htmlunit-core-js-2.26.jar selenium-opera-driver-3.4.0.jar jettiso
+ n-1.1.jar cglib-nodep-2.1_3.jar lang-tag-1.4.jar junit-4.12.jar jerse
+ y-client-1.13.jar commons-lang3-3.5.jar
+Main-Class: com.wallet.Main
+

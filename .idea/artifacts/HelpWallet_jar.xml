@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="HelpWallet:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/HelpWallet_jar</output-path>
+    <root id="root">
+      <element id="archive" name="HelpWallet.jar">
+        <element id="module-output" name="HelpWallet" />
+      </element>
+      <element id="library" level="project" name="lib" />
+    </root>
+  </artifact>
+</component>
