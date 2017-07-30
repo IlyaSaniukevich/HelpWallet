@@ -52,81 +52,6 @@ public class ModemPage {
         driver.get(homeUrl);
     }
 
-/*
-    public void getNewSms(){
-        driver.get(smsUrl);
-        checkBalans.
-    }
-*/
-
-
-
-
-    public void waitForNotVisible(int timeout, boolean isThrowException) throws Exception{
-        waitForCondition(Method.IS_VISIBLE, false, timeout, isThrowException);
-    }
-
-    /**
-     * Wrapper method to be called from methods of BasePage that implement waiting for something
-     * @param method - method name
-     * @param value - value to compare methodName's return value to
-     * @param timeout - time to wait in milliseconds (int)
-     * @param isThrowException - if true, exception is thrown upon unsuccessful wait
-     * @throws Exception
-     */
-    private void waitForCondition(Method method, boolean value, int timeout, boolean isThrowException) {
-        if(locator == null){
-            setLocator();
-        }
-
-        long finishTime = System.currentTimeMillis() + timeout;
-        while(System.currentTimeMillis() < finishTime){
-            boolean b = false;
-            switch
-                    (method){
-                case IS_PRESENT:
-                    b = isPresent();
-                    break;
-                case IS_VISIBLE:
-                    b = isVisible();
-                    break;
-                default:
-            }
-            if(b & value){
-                return;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-        }
-        if(isThrowException){
-            throw new RuntimeException("Timed out after "+ (timeout / 1000) +" seconds waiting for '"+ locator +"' element");
-        }
-    }
-
-
-    /**
-     * Check if page exists
-     * @return true if page exists and false otherwise
-     * @throws Exception
-     */
-    public boolean isPresent() {
-        if(locator == null){
-            setLocator();
-        }
-
-        try {
-
-            Selenium.getWebdriver().findElement(locator);
-            return true;
-        } catch (NoSuchElementException e){
-            return false;
-        } catch (TimeoutException e) {
-            return false;
-        }
-    }
-
 
     /**
      * Set locator for page by value in @FindBy annotation
@@ -163,28 +88,7 @@ public class ModemPage {
     }
 
 
-    /**
-     * Check if page visible
-     * @return true if page visible and false otherwise
-     * @throws Exception
-     */
-    public boolean isVisible() {
-        if(locator == null){
-            setLocator();
-        }
-        try {
 
-
-            WebElement element = Selenium.getWebdriver().findElement(locator);
-            return element.getSize().getHeight() > 0 && !element.getAttribute("style").toLowerCase().contains("display: none");
-        } catch (NoSuchElementException e){
-            return false;
-        } catch (TimeoutException e2){
-            return false;
-        } finally {
-
-        }
-    }
 
 }
 

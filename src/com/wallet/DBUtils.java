@@ -12,8 +12,10 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -129,17 +131,22 @@ public class DBUtils {
     }
 
 public static String getWinner() throws SQLException {
-
+System.out.println("Try to get winner");
     CallableStatement cstmt = null;
     ResultSet rs = null;
     cstmt = connection.prepareCall("SELECT phone FROM [HelpWallet].[dbo].[Deposit] where winners_nn is null;");
     rs= cstmt.executeQuery();
+   ArrayList<String> depositNumbers = new ArrayList<String>();
+    while(rs.next()){
+        depositNumbers.add(rs.getString("phone").trim());
+    }
 
-    int randomNum = ThreadLocalRandom.current().nextInt(0, rs.getFetchSize());
-System.out.println("get "+randomNum+" from "+rs.getFetchSize());
-    for (int i=1;i<randomNum;i++){rs.next();}
+    int randomNum = ThreadLocalRandom.current().nextInt(0, depositNumbers.size());
 
-    String winnersNumber = rs.getString("phone").trim();
+    System.out.println("get "+randomNum+" from "+depositNumbers.size());
+
+
+    String winnersNumber =  depositNumbers.get(randomNum);
        System.out.println("Random Winner's number " + winnersNumber +". Select random "+randomNum+" from "+ rs.getFetchSize());
     return winnersNumber.trim();
     }

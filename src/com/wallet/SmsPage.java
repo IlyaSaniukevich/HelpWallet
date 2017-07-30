@@ -53,7 +53,7 @@ public class SmsPage {
         String ReceiveTime;
         WebElement checkBox;
         Date date = new Date();
-
+if(smsList.size()<1)return;
         for (WebElement sms : smsList) {
 
             phoneNumber = sms.findElement(By.cssSelector(".sms_phone_number")).getText();
