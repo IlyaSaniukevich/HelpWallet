@@ -147,7 +147,7 @@ System.out.println("Try to get winner");
 
 
     String winnersNumber =  depositNumbers.get(randomNum);
-       System.out.println("Random Winner's number " + winnersNumber +". Select random "+randomNum+" from "+ rs.getFetchSize());
+       System.out.println("Random Winner's number " + winnersNumber +". Select random "+randomNum+" from "+ depositNumbers.size());
     return winnersNumber.trim();
     }
 private static void addSummToJackPot(int summ) throws SQLException {
