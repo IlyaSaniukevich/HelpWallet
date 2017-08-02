@@ -114,7 +114,7 @@ public boolean payToNumber(String phoneNumber, int summa) throws SQLException, I
         nextAfterPhoneNumber.click();
         sumInRub = summa;
         inputSumma.sendKeys(String.valueOf(sumInRub));
-        //confirmPayment.click();
+        confirmPayment.click();
         System.out.println("Paid suscessfuly");
     }catch (Throwable e){
         System.out.println("Paid Error");
