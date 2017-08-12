@@ -179,7 +179,7 @@ private static void addSummToJackPot(int summ) throws SQLException {
        System.out.println("All JackPot "+result);
         result = (int)(rs.getInt(2)*sizeOfJackPot);
         System.out.println("Reduce JackPot to "+result);
-        result = ThreadLocalRandom.current().nextInt(0, result);
+        result = ThreadLocalRandom.current().nextInt(1, result);
 
         System.out.println("size of jackPoot after random " + result);
         return result;

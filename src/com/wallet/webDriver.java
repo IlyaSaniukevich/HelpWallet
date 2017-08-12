@@ -42,10 +42,10 @@ public class webDriver {
     public static WebDriver createDriver(){
         System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 
-        ProfilesIni profile = new ProfilesIni();
-        FirefoxProfile firefoxProfile =new FirefoxProfile();
 
-    //    firefoxProfile.setPreference("network.proxy.type", 1);
+
+        FirefoxProfile firefoxProfile =new FirefoxProfile();
+     //    firefoxProfile.setPreference("network.proxy.type", 1);
      //   firefoxProfile.setPreference("network.proxy.http", "192.168.1.13");
       //  firefoxProfile.setPreference("network.proxy.http_port", 3128);
       //  firefoxProfile.setPreference("network.proxy.default", true);

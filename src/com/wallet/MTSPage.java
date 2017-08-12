@@ -100,6 +100,20 @@ if (driver.findElements(By.cssSelector(".popup-small")).size() > 0)
         waitUntilElementNotDisplayed(loginButton,driver);
     }
 
+    public void payToNumberFewTimes(String phoneNumber, int summa) throws SQLException, InterruptedException {
+
+        int winnerNN = DBUtils.saveWinner(phoneNumber,summa);
+        DBUtils.reduceFromJackPot(summa);
+        DBUtils.deleteFromDeposit(phoneNumber,summa,winnerNN);
+
+        successPaid=false;
+        int i=0;
+        while ((i<3)&&(!successPaid)) {
+            payToNumber(phoneNumber, summa);
+            i++;
+        }
+    }
+
 public boolean payToNumber(String phoneNumber, int summa) throws SQLException, InterruptedException {
     System.out.println("Try to pay");
     double sumInRub=0;
@@ -109,23 +123,64 @@ public boolean payToNumber(String phoneNumber, int summa) throws SQLException, I
         waitUntilElementDisplayed(payToNumberMTS, driver);
         payToNumberMTS.click();
         waitUntilElementDisplayed(phoneNumberInput, driver);
-        phoneNumberInput.sendKeys(phoneNumber.substring(3));
+
+  /*      for (int i=3;i<12;i++){
+            phoneNumberInput.sendKeys(phoneNumber.substring(i,i+1));
+            sleep(1000);
+        }
+*/
+        phoneNumberInput.sendKeys(phoneNumber.substring(3).trim());
+
+
+
         sleep(1000);
         nextAfterPhoneNumber.click();
+        sleep(5000);
+
+        try {
+            waitUntilElementDisplayed(inputSumma, driver);
+        }catch (Throwable e){
+            System.out.println("Error after enter number. Try again");
+            phoneNumberInput.click();
+            phoneNumberInput.clear();
+            for (int i=3;i<12;i++){
+                phoneNumberInput.sendKeys(phoneNumber.substring(i,i+1));
+                sleep(1000);
+            }
+            WebElement element = driver.findElement(By.cssSelector(".mts-button.-payments-mts-button"));
+            JavascriptExecutor executor = (JavascriptExecutor)driver;
+            executor.executeScript("arguments[0].click();", element);
+
+           // nextAfterPhoneNumber.click();
+            sleep(1000);
+        }
+        try {
+        waitUntilElementDisplayed(inputSumma, driver);
+
+        }catch (Throwable e){
+            System.out.println("Can't pay "+summa+" to number "+phoneNumber);
+        }
         sumInRub = summa;
         inputSumma.sendKeys(String.valueOf(sumInRub));
-        //confirmPayment.click();
+        sleep(1000);
+        waitUntilElementDisplayed(confirmPayment,driver);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", confirmPayment);
+        confirmPayment.click();
+
+        String disabled = confirmPayment.getAttribute("disabled");
+        int i=0;
+        while((disabled ==null)&&(i<50)){
+            disabled = confirmPayment.getAttribute("disabled");
+            sleep(500);
+            i++;
+        }
+        confirmPayment.click();
+
         System.out.println("Paid suscessfuly");
     }catch (Throwable e){
         System.out.println("Paid Error");
         successPaid=false;
     }
-
-    int winnerNN = DBUtils.saveWinner(phoneNumber,sumInRub);
-
-    DBUtils.reduceFromJackPot(summa);
-    DBUtils.deleteFromDeposit(phoneNumber,summa,winnerNN);
-
 
 
     return true;

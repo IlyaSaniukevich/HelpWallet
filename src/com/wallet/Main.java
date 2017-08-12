@@ -28,15 +28,17 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 ////////// test
-/*
-		driver = webDriver.getWebDriver();
-		vkPage = new VKPage(driver);
-		vkPage.login();
-		String winnersNumber1="375297808382";
-		String postText="Помощь оказана номеру "+winnersNumber1.substring(1,8)+"**"+winnersNumber1.substring(11,12)+" в размере 5";
 
-		vkPage.postInGroup(postText);
-*/
+
+	//	driver = webDriver.getWebDriver();
+//		mtsPage = new MTSPage(driver);
+
+	//	mtsPage.login();
+//		sleep(1000);
+
+	//	mtsPage.payToNumberFewTimes("375297808382",5);
+
+
 
 		//////////
 
@@ -51,16 +53,8 @@ public class Main {
 		
 		
 
-//try {
+try {
 	driver = webDriver.getWebDriver();
-
-	/*balansPage = new BalansPage(driver);
-	int balans = (int) Math.floor(balansPage.getBalans()*WinnersFond);
-	int prizFond =  (int) Math.floor(ThreadLocalRandom.current().nextInt(0, (int) balans )/WinnersRate*WinnersRate);
-	System.out.println("Priz fund "+prizFond+ " cents");
-	*/
-
-	//while (true) {
 
 // get new sms and save into database
 
@@ -71,24 +65,24 @@ public class Main {
 		String winnersNumber = DBUtils.getWinner();
 
 
-		MTSPage mtsPage = new MTSPage(driver);
+		 mtsPage = new MTSPage(driver);
 
 		mtsPage.login();
 		sleep(1000);
 		int jackPot=DBUtils.getJackPot();
-		mtsPage.payToNumber(winnersNumber,jackPot);
+		mtsPage.payToNumberFewTimes(winnersNumber,jackPot);
 
 		vkPage = new VKPage(driver);
 		vkPage.login();
 		if (MTSPage.successPaid) {
-			vkPage.postInGroup("Тест: Помощь оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
+			vkPage.postInGroup("Помощь оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
 		} else{
-			vkPage.postInGroup("Тест: Помощь будет оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
+			vkPage.postInGroup("Помощь будет оказана номеру " + winnersNumber.substring(0, 8) + "**" + winnersNumber.substring(10, 12) + " в размере " + jackPot + " руб");
 		}
-	//}
-//}Помощь оказана номеру 7529788**1 в размере 13 руб
-//catch (Throwable e){System.out.println(e.getStackTrace());}
-//finally {
+	}
+
+catch (Throwable e){System.out.println(e.getStackTrace());}
+finally {
 	driver.quit();
 }
 
@@ -96,4 +90,4 @@ public class Main {
 	}
 
 
-//}
+}
